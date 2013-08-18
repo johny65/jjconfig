@@ -13,17 +13,18 @@ Su uso es muy sencillo: instanciar un objeto de tipo `jjConfig` pasándole una r
 
 Un ejemplo de su uso:
 
-     //creamos el objeto:
-     jjConfig opciones("archivo.conf");
-     //leemos una opción:
-     int anchoventana = opciones.ValorInt("ancho", valor_por_defecto);
-     //leemos otra opción:
-     string archivo = opciones.Valor("archivo", archivo_por_defecto);
-     //guardamos algunas opciones:
-     opciones.SetValor("nombre", "Documento sin título");
-     opciones.SetValor("tamaño", 1024);
-     //persistir los datos:
-     opciones.Guardar();
+    :::cpp
+    //creamos el objeto:
+    jjConfig opciones("archivo.conf");
+    //leemos una opción:
+    int anchoventana = opciones.ValorInt("ancho", valor_por_defecto);
+    //leemos otra opción:
+    string archivo = opciones.Valor("archivo", archivo_por_defecto);
+    //guardamos algunas opciones:
+    opciones.SetValor("nombre", "Documento sin título");
+    opciones.SetValor("tamaño", 1024);
+    //persistir los datos:
+    opciones.Guardar();
 
 El archivo de configuración usado es de texto plano, donde las opciones son guardadas en la forma `clave=valor`. No soporta grupos como los archivos INI (un grupo o sección se indica mediante `[corchetes]`).
 
@@ -39,6 +40,7 @@ Para usar **jjConfig** en tu aplicación puedes compilar la librería y enlazarl
 
 Esto creará el archivo `libjjconfig.a` en una carpeta llamada `lib`. En la misma carpeta se encontrará el archivo `jjconfig.h` que es el que debes incluir en tu código:
 
+    :::cpp
     #include <jjconfig.h>
 
 Suponiendo que la ruta completa de la carpeta `lib` creada en el paso anterior es `${JJCONFIG_LIB}`, debes compilar tu programa con:
