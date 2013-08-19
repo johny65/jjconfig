@@ -1,5 +1,5 @@
 /*
-    jjConfig 0.4:
+    jjConfig 0.5:
     Librería simple para guardar opciones de configuración en un archivo.
     
     Copyright (C) 2013  Juan Bertinetti <juanbertinetti@gmail.com>
@@ -18,11 +18,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <fstream>
+#include <cstdlib>
 #include "jjConfig.h"
 
 using namespace std;
 
-jjConfig::jjConfig(string Archivo)
+jjConfig::jjConfig(const string &Archivo)
 {
     this->file = Archivo;
     cargar_datos();
@@ -63,30 +65,40 @@ bool jjConfig::Guardar()
     return true;
 }
 
-void jjConfig::SetValor(string Clave, string Val)
+void jjConfig::SetValor(const string &Clave, const string &Val)
 {
     this->data[Clave] = Val;
 }
 
-void jjConfig::SetValor(string Clave, int Val)
+void jjConfig::SetValor(const std::string &Clave, const char *Val)
+{
+    this->data[Clave] = Val;
+}
+
+void jjConfig::SetValor(const string &Clave, int Val)
 {
     string v = int2str(Val);
     SetValor(Clave, v);
 }
 
-void jjConfig::SetValor(string Clave, unsigned int Val)
+void jjConfig::SetValor(const string &Clave, unsigned int Val)
 {
     string v = uint2str(Val);
     SetValor(Clave, v);
 }
 
-void jjConfig::SetValor(string Clave, double Val)
+void jjConfig::SetValor(const string &Clave, double Val)
 {
     string v = dbl2str(Val);
     SetValor(Clave, v);
 }
 
-string jjConfig::Valor(string Clave, string Default)
+void jjConfig::SetValor(const string &Clave, bool Val)
+{
+    SetValor(Clave, Val ? "true" : "false");
+}
+
+string jjConfig::Valor(const string &Clave, const string &Default)
 {
     map<string, string>::iterator it;
     it = this->data.find(Clave);
@@ -95,7 +107,7 @@ string jjConfig::Valor(string Clave, string Default)
     return it->second;
 }
 
-int jjConfig::ValorInt(string Clave, int Default)
+int jjConfig::ValorInt(const string &Clave, int Default)
 {
     map<string, string>::iterator it;
     it = this->data.find(Clave);
@@ -104,7 +116,7 @@ int jjConfig::ValorInt(string Clave, int Default)
     return str2int(it->second);
 }
 
-unsigned int jjConfig::ValorUInt(string Clave, unsigned int Default)
+unsigned int jjConfig::ValorUInt(const string &Clave, unsigned int Default)
 {
     map<string, string>::iterator it;
     it = this->data.find(Clave);
@@ -113,7 +125,7 @@ unsigned int jjConfig::ValorUInt(string Clave, unsigned int Default)
     return str2uint(it->second);
 }
 
-double jjConfig::ValorDouble(string Clave, double Default)
+double jjConfig::ValorDouble(const string &Clave, double Default)
 {
     map<string, string>::iterator it;
     it = this->data.find(Clave);
@@ -122,6 +134,14 @@ double jjConfig::ValorDouble(string Clave, double Default)
     return str2dbl(it->second);
 }
 
+bool jjConfig::ValorBool(const string &Clave, bool Default)
+{
+    map<string, string>::iterator it;
+    it = this->data.find(Clave);
+    if (it == this->data.end())
+        return Default;
+    return str2bool(it->second);
+}
 
 
 /****************************************************************************
@@ -141,19 +161,29 @@ string& jjConfig::trim(string &Cadena)
     return Cadena;
 }
 
-int jjConfig::str2int(string &Cadena)
+int jjConfig::str2int(const string &Cadena)
 {
     return strtol(Cadena.c_str(), NULL, 10);
 }
 
-unsigned int jjConfig::str2uint(string &Cadena)
+unsigned int jjConfig::str2uint(const string &Cadena)
 {
     return strtoul(Cadena.c_str(), NULL, 10);
 }
 
-double jjConfig::str2dbl(string &Cadena)
+double jjConfig::str2dbl(const string &Cadena)
 {
     return strtod(Cadena.c_str(), NULL);
+}
+
+bool jjConfig::str2bool(const string &Cadena)
+{
+    string s(Cadena);
+    for (int i=0; i<s.size(); ++i){
+        s[i] = tolower(s[i]);
+    }
+    return (s == "yes" || s == "y" || s == "true" || s == "t" || s == "1" ||
+        s == "sí" || s == "s" || s == "verdadero" || s == "v" || s == "on");
 }
 
 string jjConfig::int2str(int Entero)

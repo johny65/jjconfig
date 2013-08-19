@@ -1,5 +1,5 @@
 /*
-    jjConfig 0.4:
+    jjConfig 0.5:
     Librería simple para guardar opciones de configuración en un archivo.
     
     Copyright (C) 2013  Juan Bertinetti <juanbertinetti@gmail.com>
@@ -61,8 +61,6 @@
 
 #include <map>
 #include <string>
-#include <fstream>
-#include <cstdlib>
 
 
 /// Clase principal.
@@ -75,7 +73,6 @@ class jjConfig {
 private:
     std::map<std::string, std::string> data; ///< Mapa que guarda los datos
     std::string file; ///< Indica la ruta del archivo de configuración en disco
-    
 
     ///Carga los datos del archivo de configuración.
     /**
@@ -110,7 +107,7 @@ private:
      * \param Cadena Cadena a convertir a entero.
      * \return La cadena convertida a \c int.
      */
-    int str2int(std::string &Cadena);
+    int str2int(const std::string &Cadena);
 
 
     ///Cadena a entero sin signo.
@@ -121,7 +118,7 @@ private:
      * \param Cadena Cadena a convertir a entero sin signo.
      * \return La cadena convertida a <tt>unsigned int</tt>.
      */
-    unsigned int str2uint(std::string &Cadena);
+    unsigned int str2uint(const std::string &Cadena);
 
 
     ///Cadena a flotante de doble precisión.
@@ -133,7 +130,17 @@ private:
      * \param Cadena Cadena a convertir a flotante de doble precisión.
      * \return La cadena convertida a \c double.
      */
-    double str2dbl(std::string &Cadena);
+    double str2dbl(const std::string &Cadena);
+
+
+    ///Cadena a booleano.
+    /**
+     * Convierte una cadena \c string a un booleano.
+     * 
+     * \param Cadena Cadena a convertir a booleano.
+     * \return La cadena convertida a \c bool.
+     */
+    bool str2bool(const std::string &Cadena);
 
 
     ///Entero a cadena.
@@ -164,6 +171,7 @@ private:
      * \return El número convertido a \c string.
      */
     std::string dbl2str(double Doble);
+
     
 public:
 
@@ -177,9 +185,9 @@ public:
      * 
      * \param Archivo Ruta del archivo de configuración.
      */
-    jjConfig(std::string Archivo);
+    jjConfig(const std::string &Archivo);
 
-
+    
     ///Guarda todos los datos a disco.
     /**
      * Esta función guarda todas las opciones de configuración que tenga en
@@ -202,7 +210,17 @@ public:
      * \param Clave Nombre de la opción.
      * \param Val Valor a guardar.
      */
-    void SetValor(std::string Clave, std::string Val);
+    void SetValor(const std::string &Clave, const std::string &Val);
+
+    
+    ///Configurar un valor (cadena).
+    /**
+     * Agrega o actualiza un nuevo valor a las opciones de configuración.
+     * 
+     * \param Clave Nombre de la opción.
+     * \param Val Valor a guardar.
+     */
+    void SetValor(const std::string &Clave, const char *Val);
     
 
     ///Configurar un valor (entero).
@@ -212,7 +230,7 @@ public:
      * \param Clave Nombre de la opción.
      * \param Val Valor a guardar.
      */
-    void SetValor(std::string Clave, int Val);
+    void SetValor(const std::string &Clave, int Val);
 
     
     ///Configurar un valor (entero sin signo).
@@ -222,7 +240,7 @@ public:
      * \param Clave Nombre de la opción.
      * \param Val Valor a guardar.
      */
-    void SetValor(std::string Clave, unsigned int Val);
+    void SetValor(const std::string &Clave, unsigned int Val);
 
 
     ///Configurar un valor (flotante).
@@ -232,7 +250,18 @@ public:
      * \param Clave Nombre de la opción.
      * \param Val Valor a guardar.
      */
-    void SetValor(std::string Clave, double Val);
+    void SetValor(const std::string &Clave, double Val);
+
+    
+    ///Configurar un valor (booleano).
+    /**
+     * Agrega o actualiza un nuevo valor a las opciones de configuración. El
+     * valor es guardado como "true" si es verdadero, o "false" si es falso.
+     * 
+     * \param Clave Nombre de la opción.
+     * \param Val Valor a guardar.
+     */
+    void SetValor(const std::string &Clave, bool Val);
 
     
     /* getters: */
@@ -246,7 +275,7 @@ public:
      * \param Default Valor por defecto en caso de que la opción todavía no exista.
      * \return El valor de la opción (de tipo \c string).
      */
-    std::string Valor(std::string Clave, std::string Default);
+    std::string Valor(const std::string &Clave, const std::string &Default);
 
 
     ///Obtener un valor (entero).
@@ -258,7 +287,7 @@ public:
      * \param Default Valor por defecto en caso de que la opción todavía no exista.
      * \return El valor de la opción (de tipo \c int).
      */
-    int ValorInt(std::string Clave, int Default);
+    int ValorInt(const std::string &Clave, int Default);
 
 
     ///Obtener un valor (entero sin signo).
@@ -270,7 +299,7 @@ public:
      * \param Default Valor por defecto en caso de que la opción todavía no exista.
      * \return El valor de la opción (de tipo <tt>unsigned int</tt>).
      */
-    unsigned int ValorUInt(std::string Clave, unsigned int Default);
+    unsigned int ValorUInt(const std::string &Clave, unsigned int Default);
 
 
     ///Obtener un valor (flotante).
@@ -282,7 +311,25 @@ public:
      * \param Default Valor por defecto en caso de que la opción todavía no exista.
      * \return El valor de la opción (de tipo \c double).
      */
-    double ValorDouble(std::string Clave, double Default);
+    double ValorDouble(const std::string &Clave, double Default);
+
+    
+    ///Obtener un valor (booleano).
+    /**
+     * Obtiene el valor de una opción de configuración. Si la opción no se
+     * encuentra, devuelve el valor por defecto pasado como parámetro.
+     * Los valores guardados en el archivo de configuración que son
+     * considerados como verdaderos son:
+     *
+     * yes, y, true, t, sí, s, verdadero, v, on, 1
+     *
+     * Cualquier otro valor es considerado como falso.
+     * 
+     * \param Clave Nombre de la opción.
+     * \param Default Valor por defecto en caso de que la opción todavía no exista.
+     * \return El valor de la opción (de tipo \c bool).
+     */
+    bool ValorBool(const std::string &Clave, bool Default);
     
 };
 
