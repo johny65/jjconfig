@@ -54,6 +54,18 @@ Documentación completa sobre la API de la librería se puede generar a través 
     $ make doc
 
 
+Qué hay de nuevo:
+----------------
+
+**v0.5:**
+
+* Agregados métodos para trabajar con tipo de dato booleano (`bool`).
+
+**v0.4:**
+
+* Primera versión pública liberada.
+
+
 Licencia:
 --------
 
