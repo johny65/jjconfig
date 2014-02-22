@@ -33,38 +33,38 @@ public:
 jjConfig* jjConfigTest::jj = NULL;
 
 TEST_F(jjConfigTest, test_obtener_cadena1) {
-	string s = jj->Valor("casa", "null");
-	ASSERT_EQ(s, "sarmiento");
+    string s = jj->Valor("casa", "null");
+    ASSERT_EQ(s, "sarmiento");
 }
 
 TEST_F(jjConfigTest, test_obtener_cadena2) {
-	string s = jj->Valor("nonum", "null");
-	ASSERT_EQ(s, "casa");
+    string s = jj->Valor("nonum", "null");
+    ASSERT_EQ(s, "casa");
 }
 
 TEST_F(jjConfigTest, test_obtener_entero) {
-	int i = jj->ValorInt("num", 0);
-	ASSERT_EQ(i, 42);
+    int i = jj->ValorInt("num", 0);
+    ASSERT_EQ(i, 42);
 }
 
 TEST_F(jjConfigTest, test_obtener_entero_negativo) {
-	int i = jj->ValorInt("neg", -1);
-	ASSERT_EQ(i, -1001);
+    int i = jj->ValorInt("neg", -1);
+    ASSERT_EQ(i, -1001);
 }
 
 TEST_F(jjConfigTest, test_obtener_entero_sin_signo) {
-	unsigned int i = jj->ValorUInt("num", 0);
-	ASSERT_EQ(i, 42);
+    unsigned int i = jj->ValorUInt("num", 0);
+    ASSERT_EQ(i, 42);
 }
 
 TEST_F(jjConfigTest, test_obtener_double) {
-	double f = jj->ValorDouble("float", -1.0);
-	ASSERT_EQ(f, 3.141560);
+    double f = jj->ValorDouble("float", -1.0);
+    ASSERT_EQ(f, 3.141560);
 }
 
 TEST_F(jjConfigTest, test_obtener_double_negativo) {
-	double f = jj->ValorDouble("doubleneg", -0.0);
-	ASSERT_EQ(f, -2.5);
+    double f = jj->ValorDouble("doubleneg", -0.0);
+    ASSERT_EQ(f, -2.5);
 }
 
 int main(int argc, char **argv){

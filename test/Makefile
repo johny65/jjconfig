@@ -1,6 +1,3 @@
-#INC = -I /home/johny/.local/include/
-#LIB = -L /home/johny/.local/lib/
-
 all: test.out
 	./$<
 
