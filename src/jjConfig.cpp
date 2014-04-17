@@ -1,5 +1,5 @@
 /*
-    jjConfig 0.5:
+    jjConfig 0.6:
     Librería simple para guardar opciones de configuración en un archivo.
     
     Copyright (C) 2013  Juan Bertinetti <juanbertinetti@gmail.com>
@@ -143,6 +143,11 @@ bool jjConfig::ValorBool(const string &Clave, bool Default)
     return str2bool(it->second);
 }
 
+bool jjConfig::Existe(const std::string &Clave)
+{
+    return this->data.find(Clave) != this->data.end();
+}
+
 
 /****************************************************************************
  * FUNCIONES DE UTILERÍA (PRIVADAS):
@@ -179,7 +184,7 @@ double jjConfig::str2dbl(const string &Cadena)
 bool jjConfig::str2bool(const string &Cadena)
 {
     string s(Cadena);
-    for (int i=0; i<s.size(); ++i){
+    for (size_t i=0; i<s.size(); ++i){
         s[i] = tolower(s[i]);
     }
     return (s == "yes" || s == "y" || s == "true" || s == "t" || s == "1" ||

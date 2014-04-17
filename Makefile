@@ -10,7 +10,7 @@ libjjconfig.a: jjconfig.o
 	cp src/jjConfig.h ${SALIDA}/jjconfig.h
 
 jjconfig.o: src/jjConfig.cpp src/jjConfig.h
-	g++ -c $< -o $@ -static -O2 -s
+	g++ -c $< -o $@ -static -O2 -s -Wall
 
 clean:
 	rm jjconfig.o

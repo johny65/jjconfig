@@ -57,6 +57,10 @@ Documentación completa sobre la API de la librería se puede generar a través 
 Qué hay de nuevo:
 ----------------
 
+**v0.6:**
+
+* Agregado método `Existe(clave)` para saber si una opción está presente o no.
+
 **v0.5:**
 
 * Agregados métodos para trabajar con tipo de dato booleano (`bool`).

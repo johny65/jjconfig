@@ -1,5 +1,5 @@
 /*
-    jjConfig 0.5:
+    jjConfig 0.6:
     Librería simple para guardar opciones de configuración en un archivo.
     
     Copyright (C) 2013  Juan Bertinetti <juanbertinetti@gmail.com>
@@ -330,7 +330,18 @@ public:
      * \return El valor de la opción (de tipo \c bool).
      */
     bool ValorBool(const std::string &Clave, bool Default);
-    
+
+
+    ///Saber si una opción está presente.
+    /**
+     * Hay casos donde es útil conocer de antemano si una opción está presente
+     * en el archivo de configuración o no. Esta función devuelve si la opción
+     * pasada como parámetro existe o no en el archivo de configuración.
+     *
+     * \param Clave Nombre de la opción.
+     * \return \c si la opción existe, \c false en caso contrario.
+     */
+    bool Existe(const std::string &Clave);
 };
 
 #endif
